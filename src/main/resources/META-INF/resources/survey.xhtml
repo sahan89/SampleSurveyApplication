@@ -124,7 +124,8 @@
                                       value="(Q-#{question.id}) - #{question.question}"/>
                         <p:outputPanel>
                             <h:panelGrid columns="2">
-                                 <p:selectManyCheckbox id="grid"  layout="pageDirection" columns="4" required="true">
+                                <p:selectManyCheckbox value="#{questionsView.selectedAnswers}" id="grid"
+                                                      layout="pageDirection" columns="4" required="true">
                                     <f:selectItems value="#{question.answersList}" var="answer"
                                                    itemLabel="#{answer.answer}" itemValue="#{answer.id}"/>
                                 </p:selectManyCheckbox>

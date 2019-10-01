@@ -19,6 +19,7 @@ public class QuestionsView {
     @Autowired
     private QuestionsRepository questionsRepository;
     private List<Questions> questionsList;
+    private String[] selectedAnswers;
 
     @PostConstruct
     public void init() {
@@ -27,5 +28,13 @@ public class QuestionsView {
 
     public List<Questions> getQuestionsList() {
         return questionsList;
+    }
+
+    public String[] getSelectedAnswers() {
+        return selectedAnswers;
+    }
+
+    public void setSelectedAnswers(String[] selectedAnswers) {
+        this.selectedAnswers = selectedAnswers;
     }
 }

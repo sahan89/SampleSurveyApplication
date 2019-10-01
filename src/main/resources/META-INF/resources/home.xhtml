@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <link rel="shortcut icon" href="image/smile.png"></link>
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Survey 2020</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="85" resizable="true" closable="true" collapsible="true">
+                    <div id="header" class="ui-widget ui-widget-header" style="overflow:hidden">
+                        <div style="float: left; width: auto">
+                            <h:graphicImage value="image/header.jpg" width="1165px"/>
+                        </div>
+                        <div style="float: right; margin-right: 55px; font-size: 12px">
+                            <h:form>
+                                <p>Welcome,  #{login.username}</p>
+                                <p:commandButton action="#{login.logout}" value="Logout" icon="ui-icon-extlink" ajax="false"
+                                                 style="margin-left: 30px"></p:commandButton>
+                            </h:form>
+                        </div>
+                    </div>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="0" closable="true" collapsible="true">
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="200">
+
+                    <h:form id="form" style="font-size: 12px" acceptcharset="UTF-8">
+                        <p:menu style="width:180px;">
+                            <p:submenu label="Survey 2020" style="font-size: 12px">
+                                <p:menuitem value="New Survey"  outcome="survey.xhtml" icon="ui-icon-plusthick"/>
+                                <p:menuitem value="Increment Advertisement"  icon="ui-icon-arrowreturnthick-1-n"/>
+                                <p:menuitem value="View Advertisements" icon="ui-icon-video"/>
+                            </p:submenu>
+
+                            <p:submenu label="Radio Advertisement" style="font-size: 12px">
+                                <p:menuitem value="Add Advertisement" icon="ui-icon-plusthick"/>
+                                <p:menuitem value="Increment Advertisement" icon="ui-icon-arrowreturnthick-1-n"/>
+
+                            </p:submenu>
+
+                            <p:submenu label="NEWS Paper Advertisement" style="font-size: 12px">
+                                <p:menuitem value="Add Advertisement" icon="ui-icon-plusthick"/>
+                                <p:menuitem value="Increment Advertisement" icon="ui-icon-arrowreturnthick-1-n"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">
+                    <ui:insert name="content">
+                        <h:graphicImage value="image/bg.png" style="float: right; padding-top: 220px"/>
+                    </ui:insert>
+                </p:layoutUnit>
+            </p:layout>
+        </h:body>
+    </f:view>
+</html>
+

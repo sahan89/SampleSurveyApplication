@@ -39,22 +39,16 @@ public class QuestionsView {
         questionsList = questionsRepository.findAllByStatusNot(0);
         districtList = districtRepository.findAll();
         callStatusList = callStatusRepository.findAll();
-        System.out.println("districtList ---> " + districtList.size());
     }
 
 
     public void loadMobileNumbers() {
-        System.out.println("selectedDistrict --> " + selectedDistrict);
-        System.out.println("selectedCallStatus --> " + selectedCallStatus);
         FacesContext message = FacesContext.getCurrentInstance();
         if (selectedDistrict != null && selectedCallStatus != 0) {
             loadMobileNumberList = researchNumberRepository.findAllByDistrictAndCallStatus(selectedDistrict, selectedCallStatus);
-            System.out.println("loadMobileNumberList ---> " + loadMobileNumberList.size());
             message.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Refreshed", "Number list refreshed"));
-//            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Refreshed", "Number list refreshed");
         } else {
             message.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Refreshing Error", "Number list not refreshed"));
-//            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Refreshing Error", "Number list not refreshed.");
         }
     }
 

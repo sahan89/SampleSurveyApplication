@@ -88,22 +88,19 @@
                 <h:form id="form" style="width: 100%">
                     <h:panelGrid columns="7" cellpadding="5">
                         <h:outputText value="District Code" style="color: black"/>
-                        <p:selectOneMenu id="advanced" panelStyle="width:180px"
-                                         effect="fade" var="t" style="width:160px" filter="true"
-                                         filterMatchMode="startsWith">
-                            <f:selectItems/>
-                            <p:column>
-                                <h:outputText/>
-                            </p:column>
+                        <p:selectOneMenu id="advanced" panelStyle="width:180px" value="#{questionsView.selectedDistrict}"
+                                         effect="fade" var="t" style="width:160px; font-size: 12px" filter="true"
+                                         filterMatchMode="startsWith" required="true">
+                            <f:selectItems value="#{questionsView.districtList}" var="district" itemLabel="#{district.district}" itemValue="#{district.district}" />
                         </p:selectOneMenu>
 
                         <h:outputText value="Call Status" style="color: black"/>
-                        <p:selectOneMenu style="width: 152px; color: black;font-size: 13px; font-weight: bold">
-                            <f:selectItem itemLabel="Select One" itemValue="0"/>
-                            <f:selectItem itemLabel="Call" itemValue="1"/>
-                            <f:selectItem itemLabel="Not Answering" itemValue="2"/>
-                            <f:selectItem itemLabel="Cancel" itemValue="3"/>
+                        <p:selectOneMenu value="#{questionsView.selectedCallStatus}" style="width: 152px; color: black;font-size: 13px; font-weight: bold" required="true">
+                            <f:selectItem itemLabel="Select One" itemValue=""/>
+                            <f:selectItems value="#{questionsView.callStatusList}" var="status" itemLabel="#{status.callStatus}" itemValue="#{status.id}" />
                         </p:selectOneMenu>
+
+                        <p:commandButton value="Search" icon="pi pi-check" />
 
                         <h:outputText value="Mobile No" style="color: black"/>
                         <p:selectOneMenu id="mobileNoId" panelStyle="width:180px"
@@ -134,7 +131,18 @@
                         <p:separator/>
                     </c:forEach>
                     <h3>Comments :</h3>
-                    <p:inputTextarea rows="6" cols="80"/>
+                    <p:inputTextarea id="commentId" rows="6" cols="80"/>
+                    <p:outputPanel>
+                        <p:commandButton value="Save" id="saveBtnId" style="margin-right:20px;" ajax="false"
+                                         icon="pi pi-save"  action="#{questionsView.saveQuestionsAnswers}" />
+                        <p:commandButton value="Cancel" id="cancelBtnId" style="margin-right:20px;" ajax="false"
+                                         icon="pi pi-save"/>
+                        <p:commandButton value="Reset" id="resetBtnId" style="margin-right:20px;" ajax="false"
+                                         icon="pi pi-save"/>
+                        <p:button value="Bookmark" icon="pi pi-star" style="margin-right:20px;">
+                            <f:param name="productId" value="10" />
+                        </p:button>
+                    </p:outputPanel>
                 </h:form>
             </p:tab>
         </p:tabView>

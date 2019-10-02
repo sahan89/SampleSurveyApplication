@@ -23,13 +23,16 @@ public class QuestionsView {
     private DistrictRepository districtRepository;
     @Autowired
     private CallStatusRepository callStatusRepository;
+    @Autowired
+    private ResearchNumberRepository researchNumberRepository;
 
     private List<Questions> questionsList;
     private List<District> districtList;
     private int selectedCallStatus;
-    private List<CallStatus> callStatusList;
-    private String[] selectedAnswers;
     private String selectedDistrict;
+    private List<CallStatus> callStatusList;
+    private List<ResearchNumber> loadMobileNumberList;
+    private String[] selectedAnswers;
 
     @PostConstruct
     public void init() {
@@ -37,6 +40,22 @@ public class QuestionsView {
         districtList = districtRepository.findAll();
         callStatusList = callStatusRepository.findAll();
         System.out.println("districtList ---> " + districtList.size());
+    }
+
+
+    public void loadMobileNumbers() {
+        System.out.println("selectedDistrict --> " + selectedDistrict);
+        System.out.println("selectedCallStatus --> " + selectedCallStatus);
+        FacesContext message = FacesContext.getCurrentInstance();
+        if (selectedDistrict != null && selectedCallStatus != 0) {
+            loadMobileNumberList = researchNumberRepository.findAllByDistrictAndCallStatus(selectedDistrict, selectedCallStatus);
+            System.out.println("loadMobileNumberList ---> " + loadMobileNumberList.size());
+            message.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Refreshed", "Number list refreshed"));
+//            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Refreshed", "Number list refreshed");
+        } else {
+            message.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Refreshing Error", "Number list not refreshed"));
+//            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Refreshing Error", "Number list not refreshed.");
+        }
     }
 
     public void saveQuestionsAnswers() {
@@ -87,5 +106,13 @@ public class QuestionsView {
 
     public void setCallStatusList(List<CallStatus> callStatusList) {
         this.callStatusList = callStatusList;
+    }
+
+    public List<ResearchNumber> getLoadMobileNumberList() {
+        return loadMobileNumberList;
+    }
+
+    public void setLoadMobileNumberList(List<ResearchNumber> loadMobileNumberList) {
+        this.loadMobileNumberList = loadMobileNumberList;
     }
 }

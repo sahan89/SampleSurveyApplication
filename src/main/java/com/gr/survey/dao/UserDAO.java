@@ -12,7 +12,7 @@ public class UserDAO {
         PreparedStatement ps;
         try {
             con = DBConnection.getConnection();
-            ps = con.prepareStatement("select username, password from user_table where username= ? and password= ?  and status= 1");
+            ps = con.prepareStatement("select username, password from users where username= ? and password= ?  and status= 1");
             ps.setString(1, username);
             ps.setString(2, password);
 

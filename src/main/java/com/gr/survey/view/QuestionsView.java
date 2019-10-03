@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Named
@@ -26,6 +27,8 @@ public class QuestionsView {
     private ResponseStatusRepository responseStatusRepository;
     @Autowired
     private ResearchNumberRepository researchNumberRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     private List<Questions> questionsList;
     private List<District> districtList;
@@ -38,7 +41,9 @@ public class QuestionsView {
     private List<ResearchNumber> loadMobileNumberList;
     private List<String> selectedAnswers;
     private String comment;
+    private String logUsername;
 
+    HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
     @PostConstruct
     public void init() {
@@ -46,6 +51,8 @@ public class QuestionsView {
         districtList = districtRepository.findAll();
         callStatusList = callStatusRepository.findAll();
         responseStatusList = responseStatusRepository.findAll();
+        logUsername = (String) httpSession.getAttribute("username");
+        System.out.println("Log Users =====>>> " + logUsername);
     }
 
 
@@ -68,14 +75,20 @@ public class QuestionsView {
         System.out.println("Comment ----> " + comment);
         System.out.println("Response ----> " + selectedResponseStatus);
         System.out.println("selectedMobileNo ----> " + selectedMobileNoId);
-        if (selectedMobileNoId != 0) {
-            if (selectedResponseStatus != 0) {
-
+        System.out.println("Log Users =====>>> " + logUsername);
+        Users logUser = userRepository.findUsersByUsernameAndStatusNot(logUsername, 0);
+        if (logUser != null && logUser.getUsername() != null){
+            if (selectedMobileNoId != 0) {
+                if (selectedResponseStatus != 0) {
+                    System.out.println("################################");
+                } else {
+                    messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Response Status Cannot be NULL", "Response Status Cannot be null"));
+                }
             } else {
-                messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Response Status Cannot be NULL", "Response Status Cannot be null"));
-            }
-        } else {
                 messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mobile Number Cannot be NULL", "Mobile Number Cannot be NULL"));
+            }
+        }else {
+            messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User Session Out.! Please re login to your account.!", ""));
         }
 
       /*  System.out.println("-----> " + selectedAnswers.size());
@@ -168,5 +181,21 @@ public class QuestionsView {
 
     public void setSelectedMobileNoId(int selectedMobileNoId) {
         this.selectedMobileNoId = selectedMobileNoId;
+    }
+
+    public String getLogUsername() {
+        return logUsername;
+    }
+
+    public void setLogUsername(String logUsername) {
+        this.logUsername = logUsername;
+    }
+
+    public HttpSession getHttpSession() {
+        return httpSession;
+    }
+
+    public void setHttpSession(HttpSession httpSession) {
+        this.httpSession = httpSession;
     }
 }

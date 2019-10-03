@@ -85,12 +85,12 @@
             <p:tab id="surveyTabID" title="Survey 2020">
 
                 <h:form id="form1" style="width: 100%">
-                    <p:growl id="message" showDetail="false" life="3000"/>
+                <p:growl id="message" showDetail="false" life="3000"/>
                     <h:panelGrid columns="7" cellpadding="5">
                         <h:outputText value="District Code" style="color: black"/>
                         <p:selectOneMenu id="advanced" panelStyle="width:180px"
                                          value="#{questionsView.selectedDistrict}"
-                                         effect="fade" var="t" style="width:160px; font-size: 12px" filter="true"
+                                         style="width:160px; font-size: 12px" filter="true"
                                          filterMatchMode="startsWith" required="true">
                             <f:selectItem itemLabel="Select One" itemValue=""/>
                             <f:selectItems value="#{questionsView.districtList}" var="district"
@@ -106,15 +106,18 @@
                                            itemLabel="#{status.callStatus}" itemValue="#{status.id}"/>
                         </p:selectOneMenu>
 
-                        <p:commandButton id="searchBtnId" value="Search" update="mobileNoId message" action="#{questionsView.loadMobileNumbers}"
+                        <p:commandButton id="searchBtnId" value="Search" update="mobileNoId message"
+                                         action="#{questionsView.loadMobileNumbers}"
                                          icon="pi pi-check">
-                            <f:ajax execute="searchBtnId" render="mobileNoId" />
+                            <f:ajax execute="searchBtnId" render="mobileNoId"/>
                         </p:commandButton>
 
                         <h:outputText value="Mobile No" style="color: black"/>
                         <p:selectOneMenu id="mobileNoId" panelStyle="width:180px"
-                                         style="width:160px" filter="true" required="true"
+                                         value="#{questionsView.selectedMobileNoId  }"
+                                         style="width:160px" filter="true"
                                          filterMatchMode="startsWith">
+                            <p:ajax listener="#{questionsView.onMobileNoChange}" />
                             <f:selectItem itemLabel="Select One" itemValue=""/>
                             <f:selectItems value="#{questionsView.loadMobileNumberList}" var="mobileNo"
                                            itemLabel="#{mobileNo.mobileNumber}" itemValue="#{mobileNo.id}"/>
@@ -125,36 +128,46 @@
                     </h:panelGrid>
                 </h:form>
                 <h:form id="form2" style="width: 100%">
+                    <p:growl id="messages" showDetail="false" life="3000"/>
                     <h2 style="color: blue">Survey Questions</h2>
+                    <h:panelGrid id="formGrid">
 
-                    <c:forEach items="${questionsView.questionsList}"
-                               var="question" varStatus="i">
-                        <h:outputText style="font-weight: bold; font-size: 16px"
-                                      value="(Q-#{question.id}) - #{question.question}"/>
+                        <c:forEach items="${questionsView.questionsList}"
+                                   var="question" varStatus="i">
+                            <h:outputText style="font-weight: bold; font-size: 16px"
+                                          value="(Q-#{question.id}) - #{question.question}"/>
+                            <p:outputPanel>
+                                <h:panelGrid columns="2">
+                                    <p:selectManyCheckbox value="#{questionsView.selectedAnswers}" id="grid"
+                                                          layout="pageDirection" columns="4" required="true">
+                                        <f:selectItems value="#{question.answersList}" var="answer"
+                                                       itemLabel="#{answer.answer}" itemValue="#{answer.id}"/>
+                                    </p:selectManyCheckbox>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                            <p:separator/>
+                        </c:forEach>
+                        <h3>Response Status :</h3>
+                        <p:selectOneMenu value="#{questionsView.selectedResponseStatus}"
+                                         style="width: 152px; color: black;font-size: 13px; font-weight: bold"
+                                         required="true">
+                            <f:selectItem itemLabel="Select One" itemValue="0"/>
+                            <f:selectItems value="#{questionsView.responseStatusList}" var="res"
+                                           itemLabel="#{res.responseStatus}" itemValue="#{res.id}"/>
+                        </p:selectOneMenu>
+                        <h3>Comments :</h3>
+                        <p:inputTextarea id="commentId" rows="6" cols="80" value="#{questionsView.comment}"/>
                         <p:outputPanel>
-                            <h:panelGrid columns="2">
-                                <p:selectManyCheckbox value="#{questionsView.selectedAnswers}" id="grid"
-                                                      layout="pageDirection" columns="4" required="true">
-                                    <f:selectItems value="#{question.answersList}" var="answer"
-                                                   itemLabel="#{answer.answer}" itemValue="#{answer.id}"/>
-                                </p:selectManyCheckbox>
-                            </h:panelGrid>
+                            <p:commandButton value="Save" id="saveBtnId"
+                                             style="margin-right:20px; background-color: green"
+                                             ajax="false"
+                                             icon="ui-icon-disk" action="#{questionsView.saveQuestionsAnswers}"/>
+                            <p:commandButton class="ui-icon-refresh" value="Reset" update="form2" process="@this"
+                                             style="margin-right:20px;background-color: red" icon="pi pi-save">
+                                <p:resetInput target="form2"/>
+                            </p:commandButton>
                         </p:outputPanel>
-                        <p:separator/>
-                    </c:forEach>
-                    <h3>Comments :</h3>
-                    <p:inputTextarea id="commentId" rows="6" cols="80"/>
-                    <p:outputPanel>
-                        <p:commandButton value="Save" id="saveBtnId" style="margin-right:20px;" ajax="false"
-                                         icon="pi pi-save" action="#{questionsView.saveQuestionsAnswers}"/>
-                        <p:commandButton value="Cancel" id="cancelBtnId" style="margin-right:20px;" ajax="false"
-                                         icon="pi pi-save"/>
-                        <p:commandButton value="Reset" id="resetBtnId" style="margin-right:20px;" ajax="false"
-                                         icon="pi pi-save"/>
-                        <p:button value="Bookmark" icon="pi pi-star" style="margin-right:20px;">
-                            <f:param name="productId" value="10"/>
-                        </p:button>
-                    </p:outputPanel>
+                    </h:panelGrid>
                 </h:form>
             </p:tab>
         </p:tabView>

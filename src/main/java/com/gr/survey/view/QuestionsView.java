@@ -9,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import java.util.Arrays;
 import java.util.List;
 
 @Named
@@ -24,49 +23,78 @@ public class QuestionsView {
     @Autowired
     private CallStatusRepository callStatusRepository;
     @Autowired
+    private ResponseStatusRepository responseStatusRepository;
+    @Autowired
     private ResearchNumberRepository researchNumberRepository;
 
     private List<Questions> questionsList;
     private List<District> districtList;
     private int selectedCallStatus;
+    private int selectedResponseStatus;
     private String selectedDistrict;
+    private int selectedMobileNoId;
     private List<CallStatus> callStatusList;
+    private List<ResponseStatus> responseStatusList;
     private List<ResearchNumber> loadMobileNumberList;
-    private String[] selectedAnswers;
+    private List<String> selectedAnswers;
+    private String comment;
+
 
     @PostConstruct
     public void init() {
         questionsList = questionsRepository.findAllByStatusNot(0);
         districtList = districtRepository.findAll();
         callStatusList = callStatusRepository.findAll();
+        responseStatusList = responseStatusRepository.findAll();
     }
 
 
     public void loadMobileNumbers() {
         FacesContext message = FacesContext.getCurrentInstance();
         if (selectedDistrict != null && selectedCallStatus != 0) {
-            loadMobileNumberList = researchNumberRepository.findAllByDistrictAndCallStatus(selectedDistrict, selectedCallStatus);
+            loadMobileNumberList = researchNumberRepository.findAllByDistrictAndCallStatusAndChecked(selectedDistrict, selectedCallStatus, 0);
             message.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Refreshed", "Number list refreshed"));
         } else {
             message.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Refreshing Error", "Number list not refreshed"));
         }
     }
 
+    public void onMobileNoChange() {
+        System.out.println("selectedMobileNo ----- " + selectedMobileNoId);
+    }
+
     public void saveQuestionsAnswers() {
-        System.out.println("-----> " + Arrays.toString(selectedAnswers));
+        FacesContext messages = FacesContext.getCurrentInstance();
+        System.out.println("Comment ----> " + comment);
+        System.out.println("Response ----> " + selectedResponseStatus);
+        System.out.println("selectedMobileNo ----> " + selectedMobileNoId);
+        if (selectedMobileNoId != 0) {
+            if (selectedResponseStatus != 0) {
+
+            } else {
+                messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Response Status Cannot be NULL", "Response Status Cannot be null"));
+            }
+        } else {
+                messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mobile Number Cannot be NULL", "Mobile Number Cannot be NULL"));
+        }
+
+      /*  System.out.println("-----> " + selectedAnswers.size());
+        for (String selectedAnswer : selectedAnswers) {
+            System.out.println("A----> " + selectedAnswer);
+        }
         FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Welcome " + selectedAnswers.toString()));
+                new FacesMessage("Welcome " + selectedAnswers.toString()));*/
     }
 
     public List<Questions> getQuestionsList() {
         return questionsList;
     }
 
-    public String[] getSelectedAnswers() {
+    public List<String> getSelectedAnswers() {
         return selectedAnswers;
     }
 
-    public void setSelectedAnswers(String[] selectedAnswers) {
+    public void setSelectedAnswers(List<String> selectedAnswers) {
         this.selectedAnswers = selectedAnswers;
     }
 
@@ -108,5 +136,37 @@ public class QuestionsView {
 
     public void setLoadMobileNumberList(List<ResearchNumber> loadMobileNumberList) {
         this.loadMobileNumberList = loadMobileNumberList;
+    }
+
+    public int getSelectedResponseStatus() {
+        return selectedResponseStatus;
+    }
+
+    public void setSelectedResponseStatus(int selectedResponseStatus) {
+        this.selectedResponseStatus = selectedResponseStatus;
+    }
+
+    public List<ResponseStatus> getResponseStatusList() {
+        return responseStatusList;
+    }
+
+    public void setResponseStatusList(List<ResponseStatus> responseStatusList) {
+        this.responseStatusList = responseStatusList;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public int getSelectedMobileNoId() {
+        return selectedMobileNoId;
+    }
+
+    public void setSelectedMobileNoId(int selectedMobileNoId) {
+        this.selectedMobileNoId = selectedMobileNoId;
     }
 }

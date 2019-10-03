@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ResearchNumberRepository extends JpaRepository<ResearchNumber, Integer> {
-    List<ResearchNumber> findAllByDistrictAndCallStatus(String district, int status);
+    List<ResearchNumber> findAllByDistrictAndCallStatusAndChecked(String district, int status, int checked);
 }

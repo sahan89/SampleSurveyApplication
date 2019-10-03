@@ -26,7 +26,7 @@
                         <div style="float: right; margin-right: 55px; font-size: 12px">
                             <h:form>
                                 <p>Welcome,  #{login.username}</p>
-                                <p:commandButton action="#{login.logout}" value="Logout" icon="ui-icon-extlink" ajax="false"
+                                <p:commandButton action="#{login.logout}" value="Logout" icon="ui-icon-power" ajax="false"
                                                  style="margin-left: 30px"></p:commandButton>
                             </h:form>
                         </div>
@@ -41,20 +41,7 @@
                     <h:form id="form" style="font-size: 12px" acceptcharset="UTF-8">
                         <p:menu style="width:180px;">
                             <p:submenu label="Survey 2020" style="font-size: 12px">
-                                <p:menuitem value="New Survey"  outcome="survey.xhtml" icon="ui-icon-plusthick"/>
-                                <p:menuitem value="Increment Advertisement"  icon="ui-icon-arrowreturnthick-1-n"/>
-                                <p:menuitem value="View Advertisements" icon="ui-icon-video"/>
-                            </p:submenu>
-
-                            <p:submenu label="Radio Advertisement" style="font-size: 12px">
-                                <p:menuitem value="Add Advertisement" icon="ui-icon-plusthick"/>
-                                <p:menuitem value="Increment Advertisement" icon="ui-icon-arrowreturnthick-1-n"/>
-
-                            </p:submenu>
-
-                            <p:submenu label="NEWS Paper Advertisement" style="font-size: 12px">
-                                <p:menuitem value="Add Advertisement" icon="ui-icon-plusthick"/>
-                                <p:menuitem value="Increment Advertisement" icon="ui-icon-arrowreturnthick-1-n"/>
+                                <p:menuitem value="New Survey"  outcome="survey.xhtml" icon="ui-icon-calculator"/>
                             </p:submenu>
                         </p:menu>
                     </h:form>

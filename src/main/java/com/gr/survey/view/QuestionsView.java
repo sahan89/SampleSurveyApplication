@@ -10,6 +10,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Named
@@ -29,6 +32,10 @@ public class QuestionsView {
     private ResearchNumberRepository researchNumberRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SurveyMainRepository surveyMainRepository;
+    @Autowired
+    private SurveyAnswersRepository surveyAnswersRepository;
 
     private List<Questions> questionsList;
     private List<District> districtList;
@@ -42,6 +49,7 @@ public class QuestionsView {
     private List<String> selectedAnswers;
     private String comment;
     private String logUsername;
+    HashMap<Integer, Integer> selectedQuestionsAndAnswers = new HashMap<>();
 
     HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
@@ -52,9 +60,7 @@ public class QuestionsView {
         callStatusList = callStatusRepository.findAll();
         responseStatusList = responseStatusRepository.findAll();
         logUsername = (String) httpSession.getAttribute("username");
-        System.out.println("Log Users =====>>> " + logUsername);
     }
-
 
     public void loadMobileNumbers() {
         FacesContext message = FacesContext.getCurrentInstance();
@@ -67,36 +73,62 @@ public class QuestionsView {
     }
 
     public void onMobileNoChange() {
-        System.out.println("selectedMobileNo ----- " + selectedMobileNoId);
+    }
+
+    public void selectingAnswersEvent(int questionId, String a) {
+        selectedQuestionsAndAnswers.values().removeIf(val -> val.equals(questionId));
+        for (String answerId : selectedAnswers) {
+            selectedQuestionsAndAnswers.put(Integer.parseInt(answerId), questionId);
+        }
     }
 
     public void saveQuestionsAnswers() {
         FacesContext messages = FacesContext.getCurrentInstance();
-        System.out.println("Comment ----> " + comment);
-        System.out.println("Response ----> " + selectedResponseStatus);
-        System.out.println("selectedMobileNo ----> " + selectedMobileNoId);
-        System.out.println("Log Users =====>>> " + logUsername);
+
         Users logUser = userRepository.findUsersByUsernameAndStatusNot(logUsername, 0);
-        if (logUser != null && logUser.getUsername() != null){
+        if (logUser != null && logUser.getUsername() != null) {
+            SurveyMain savedSurvey = null;
             if (selectedMobileNoId != 0) {
                 if (selectedResponseStatus != 0) {
-                    System.out.println("################################");
+                    ResearchNumber researchNumber = researchNumberRepository.findOne(selectedMobileNoId);
+                    researchNumber.setResponseId(selectedResponseStatus);
+                    researchNumber.setChecked(1);
+                    researchNumber.setCallStatus(selectedCallStatus);
+                    ResearchNumber savedResearchNumber = researchNumberRepository.save(researchNumber);
+                    if (savedResearchNumber != null && savedResearchNumber.getId() != 0) {
+                        SurveyMain surveyMain = new SurveyMain();
+                        surveyMain.setComment(comment);
+                        surveyMain.setCreatedDate(new Date());
+                        surveyMain.setUserId(logUser.getId());
+                        surveyMain.setResearchNoId(savedResearchNumber.getId());
+                        savedSurvey = surveyMainRepository.save(surveyMain);
+                    } else {
+                        messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data Saving Error!", "Data Saving Error!"));
+                    }
+                    if (savedSurvey != null && savedSurvey.getId() != 0) {
+                        List<SurveyAnswers> surveyAnswersList = new ArrayList<>();
+                        for (int i : selectedQuestionsAndAnswers.keySet()) {
+                        SurveyAnswers surveyAnswers = new SurveyAnswers();
+                            surveyAnswers.setQuestionId(selectedQuestionsAndAnswers.get(i));
+                            surveyAnswers.setAnswerId(i);
+                            surveyAnswers.setSurveyMainId(savedSurvey.getId());
+                            surveyAnswersList.add(surveyAnswers);
+                            System.out.println("key: " + i + " value: " + selectedQuestionsAndAnswers.get(i));
+                        }
+                        surveyAnswersRepository.save(surveyAnswersList);
+                    } else {
+                        messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data Saving Error", "Data Saving Error"));
+                    }
+                    messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully Saved!", "Successfully Saved!"));
                 } else {
                     messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Response Status Cannot be NULL", "Response Status Cannot be null"));
                 }
             } else {
                 messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mobile Number Cannot be NULL", "Mobile Number Cannot be NULL"));
             }
-        }else {
+        } else {
             messages.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User Session Out.! Please re login to your account.!", ""));
         }
-
-      /*  System.out.println("-----> " + selectedAnswers.size());
-        for (String selectedAnswer : selectedAnswers) {
-            System.out.println("A----> " + selectedAnswer);
-        }
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Welcome " + selectedAnswers.toString()));*/
     }
 
     public List<Questions> getQuestionsList() {

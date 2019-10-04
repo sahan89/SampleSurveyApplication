@@ -1,8 +1,6 @@
 package com.gr.survey.model;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "survey_answers")
@@ -23,7 +21,7 @@ public class SurveyAnswers {
         this.id = id;
     }
 
-    @Column(name = "surveyMainId")
+    @Column(name = "survey_main_id")
     public int getSurveyMainId() {
         return surveyMainId;
     }
@@ -32,7 +30,7 @@ public class SurveyAnswers {
         this.surveyMainId = surveyMainId;
     }
 
-    @Column(name = "questionId")
+    @Column(name = "question_id")
     public int getQuestionId() {
         return questionId;
     }
@@ -41,7 +39,7 @@ public class SurveyAnswers {
         this.questionId = questionId;
     }
 
-    @Column(name = "answerId")
+    @Column(name = "answer_id")
     public int getAnswerId() {
         return answerId;
     }

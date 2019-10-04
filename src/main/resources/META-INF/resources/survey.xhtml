@@ -85,7 +85,7 @@
             <p:tab id="surveyTabID" title="Survey 2020">
 
                 <h:form id="form1" style="width: 100%">
-                <p:growl id="message" showDetail="false" life="3000"/>
+                    <p:growl id="message" showDetail="false" life="3000"/>
                     <h:panelGrid columns="7" cellpadding="5">
                         <h:outputText value="District Code" style="color: black"/>
                         <p:selectOneMenu id="advanced" panelStyle="width:180px"
@@ -117,7 +117,7 @@
                                          value="#{questionsView.selectedMobileNoId  }"
                                          style="width:160px" filter="true"
                                          filterMatchMode="startsWith">
-                            <p:ajax listener="#{questionsView.onMobileNoChange}" />
+                            <p:ajax listener="#{questionsView.onMobileNoChange}"/>
                             <f:selectItem itemLabel="Select One" itemValue=""/>
                             <f:selectItems value="#{questionsView.loadMobileNumberList}" var="mobileNo"
                                            itemLabel="#{mobileNo.mobileNumber}" itemValue="#{mobileNo.id}"/>
@@ -142,6 +142,7 @@
                                                           layout="pageDirection" columns="4" required="true">
                                         <f:selectItems value="#{question.answersList}" var="answer"
                                                        itemLabel="#{answer.answer}" itemValue="#{answer.id}"/>
+                                        <p:ajax listener="#{questionsView.selectingAnswersEvent(question.id, questionsView.selectedAnswers)}"/>
                                     </p:selectManyCheckbox>
                                 </h:panelGrid>
                             </p:outputPanel>
@@ -161,11 +162,16 @@
                             <p:commandButton value="Save" id="saveBtnId"
                                              style="margin-right:20px; background-color: green"
                                              ajax="false"
-                                             icon="ui-icon-disk" action="#{questionsView.saveQuestionsAnswers}"/>
-                            <p:commandButton class="ui-icon-refresh" value="Reset" update="form2" process="@this"
+                                             icon="ui-icon-disk" action="#{questionsView.saveQuestionsAnswers}"
+                                             update="form2"
+                                             process="@this">
+                                <p:resetInput target="form2"/>
+                            </p:commandButton>
+                            <p:commandButton class="ui-icon-refresh" value="Reset" update="form2 " process="@this"
                                              style="margin-right:20px;background-color: red" icon="pi pi-save">
                                 <p:resetInput target="form2"/>
                             </p:commandButton>
+
                         </p:outputPanel>
                     </h:panelGrid>
                 </h:form>

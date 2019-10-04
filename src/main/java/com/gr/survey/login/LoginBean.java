@@ -42,7 +42,7 @@ public class LoginBean implements Serializable {
         this.status = status;
     }
 
-    
+
     public String getUsername() {
         return username;
     }

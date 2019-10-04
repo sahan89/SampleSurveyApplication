@@ -10,7 +10,7 @@ public class SurveyMain implements Serializable {
     private int id;
     private String comment;
     private int userId;
-    private int status;
+    private int researchNoId;
     private Date createdDate;
     private SurveyAnswers surveyAnswers;
 
@@ -43,15 +43,6 @@ public class SurveyMain implements Serializable {
         this.userId = userId;
     }
 
-    @Column(name = "status")
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;
@@ -59,5 +50,14 @@ public class SurveyMain implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    @Column(name = "research_no_id")
+    public int getResearchNoId() {
+        return researchNoId;
+    }
+
+    public void setResearchNoId(int researchNoId) {
+        this.researchNoId = researchNoId;
     }
 }

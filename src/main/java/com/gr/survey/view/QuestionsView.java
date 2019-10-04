@@ -42,6 +42,8 @@ public class QuestionsView {
     private int selectedCallStatus;
     private int selectedResponseStatus;
     private String selectedDistrict;
+    private String selectedRegistredDistrict;
+    private String registeredDistrict;
     private int selectedMobileNoId;
     private List<CallStatus> callStatusList;
     private List<ResponseStatus> responseStatusList;
@@ -49,7 +51,8 @@ public class QuestionsView {
     private List<String> selectedAnswers;
     private String comment;
     private String logUsername;
-    HashMap<Integer, Integer> selectedQuestionsAndAnswers = new HashMap<>();
+    private HashMap<Integer, Integer> selectedQuestionsAndAnswers = new HashMap<>();
+    private boolean visiblePanel = true;
 
     HttpSession httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
@@ -75,6 +78,15 @@ public class QuestionsView {
     public void onMobileNoChange() {
     }
 
+    public void showHidePanel() {
+        System.out.println("selectedResponseStatus ---> " + selectedResponseStatus);
+        if (selectedResponseStatus == 1) {
+            visiblePanel = true;
+        } else {
+            visiblePanel = false;
+        }
+    }
+
     public void selectingAnswersEvent(int questionId, String a) {
         selectedQuestionsAndAnswers.values().removeIf(val -> val.equals(questionId));
         for (String answerId : selectedAnswers) {
@@ -94,6 +106,7 @@ public class QuestionsView {
                     researchNumber.setResponseId(selectedResponseStatus);
                     researchNumber.setChecked(1);
                     researchNumber.setCallStatus(selectedCallStatus);
+                    researchNumber.setRegisteredDistrict(selectedRegistredDistrict);
                     ResearchNumber savedResearchNumber = researchNumberRepository.save(researchNumber);
                     if (savedResearchNumber != null && savedResearchNumber.getId() != 0) {
                         SurveyMain surveyMain = new SurveyMain();
@@ -108,7 +121,7 @@ public class QuestionsView {
                     if (savedSurvey != null && savedSurvey.getId() != 0) {
                         List<SurveyAnswers> surveyAnswersList = new ArrayList<>();
                         for (int i : selectedQuestionsAndAnswers.keySet()) {
-                        SurveyAnswers surveyAnswers = new SurveyAnswers();
+                            SurveyAnswers surveyAnswers = new SurveyAnswers();
                             surveyAnswers.setQuestionId(selectedQuestionsAndAnswers.get(i));
                             surveyAnswers.setAnswerId(i);
                             surveyAnswers.setSurveyMainId(savedSurvey.getId());
@@ -230,4 +243,29 @@ public class QuestionsView {
     public void setHttpSession(HttpSession httpSession) {
         this.httpSession = httpSession;
     }
+
+    public boolean isVisiblePanel() {
+        return visiblePanel;
+    }
+
+    public void setVisiblePanel(boolean visiblePanel) {
+        this.visiblePanel = visiblePanel;
+    }
+
+    public String getRegisteredDistrict() {
+        return registeredDistrict;
+    }
+
+    public void setRegisteredDistrict(String registeredDistrict) {
+        this.registeredDistrict = registeredDistrict;
+    }
+
+    public String getSelectedRegistredDistrict() {
+        return selectedRegistredDistrict;
+    }
+
+    public void setSelectedRegistredDistrict(String selectedRegistredDistrict) {
+        this.selectedRegistredDistrict = selectedRegistredDistrict;
+    }
 }
+

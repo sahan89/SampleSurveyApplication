@@ -9,6 +9,7 @@ public class ResearchNumber implements Serializable {
     private int id;
     private String mobileNumber;
     private String district;
+    private String registeredDistrict;
     private int responseId;
     private int checked;
     private int callStatus;
@@ -67,5 +68,14 @@ public class ResearchNumber implements Serializable {
 
     public void setCallStatus(int callStatus) {
         this.callStatus = callStatus;
+    }
+
+    @Column(name = "registered_district")
+    public String getRegisteredDistrict() {
+        return registeredDistrict;
+    }
+
+    public void setRegisteredDistrict(String registeredDistrict) {
+        this.registeredDistrict = registeredDistrict;
     }
 }

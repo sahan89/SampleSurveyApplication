@@ -34,20 +34,7 @@ CREATE TABLE `answers`  (
 -- ----------------------------
 -- Records of answers
 -- ----------------------------
-INSERT INTO `answers` VALUES (1, 1, 'උත්තර  1.1', 0);
-INSERT INTO `answers` VALUES (2, 1, 'උත්තර  1.2', 0);
-INSERT INTO `answers` VALUES (3, 1, 'Answer 1.3', 0);
-INSERT INTO `answers` VALUES (4, 1, 'Answer 1.4', 0);
-INSERT INTO `answers` VALUES (5, 2, 'Answer 2.1', 0);
-INSERT INTO `answers` VALUES (6, 2, 'Answer 2.2', 0);
-INSERT INTO `answers` VALUES (7, 2, 'Answer 2.3', 0);
-INSERT INTO `answers` VALUES (8, 2, 'Answer 2.4', 0);
-INSERT INTO `answers` VALUES (9, 3, 'උත්තර  3.1', 0);
-INSERT INTO `answers` VALUES (10, 3, 'Answer 3.2', 0);
-INSERT INTO `answers` VALUES (11, 3, 'Answer 3.3', 0);
-INSERT INTO `answers` VALUES (12, 3, 'Answer 3.4', 0);
-INSERT INTO `answers` VALUES (13, 3, 'Answer 3.5', 0);
-INSERT INTO `answers` VALUES (14, 3, 'Answer 3.6', 0);
+
 
 -- ----------------------------
 -- Table structure for call_status

@@ -131,31 +131,48 @@
                     <p:growl id="messages" showDetail="false" life="3000"/>
                     <h2 style="color: blue">Survey Questions</h2>
                     <h:panelGrid id="formGrid">
+                        <p:panel>
+                            <h3>Response Status :</h3>
+                            <p:selectOneMenu value="#{questionsView.selectedResponseStatus}"
+                                             style="width: 152px; color: black;font-size: 13px; font-weight: bold"
+                                             required="true">
+                                <!--                            <f:selectItem itemLabel="Select One" itemValue="0"/>-->
+                                <f:selectItems value="#{questionsView.responseStatusList}" var="res"
+                                               itemLabel="#{res.responseStatus}" itemValue="#{res.id}"
+                                />
+                                <p:ajax listener="#{questionsView.showHidePanel}" update="formGrid"/>
+                            </p:selectOneMenu>
+                        </p:panel>
 
-                        <c:forEach items="${questionsView.questionsList}"
-                                   var="question" varStatus="i">
-                            <h:outputText style="font-weight: bold; font-size: 16px"
-                                          value="(Q-#{question.id}) - #{question.question}"/>
-                            <p:outputPanel>
-                                <h:panelGrid columns="2">
-                                    <p:selectManyCheckbox value="#{questionsView.selectedAnswers}" id="grid"
-                                                          layout="pageDirection" columns="4" required="true">
-                                        <f:selectItems value="#{question.answersList}" var="answer"
-                                                       itemLabel="#{answer.answer}" itemValue="#{answer.id}"/>
-                                        <p:ajax listener="#{questionsView.selectingAnswersEvent(question.id, questionsView.selectedAnswers)}"/>
-                                    </p:selectManyCheckbox>
-                                </h:panelGrid>
-                            </p:outputPanel>
+                        <p:panel id="questionsPanelId" rendered="#{questionsView.visiblePanel}">
+                            <h3>Registed District :</h3>
+                            <p:selectOneMenu id="registedDistrictId" panelStyle="width:180px"
+                                             value="#{questionsView.selectedRegistredDistrict}"
+                                             style="width:160px; font-size: 12px" filter="true"
+                                             filterMatchMode="startsWith" required="true">
+                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                <f:selectItems value="#{questionsView.districtList}" var="district"
+                                               itemLabel="#{district.district}" itemValue="#{district.district}"/>
+                            </p:selectOneMenu>
                             <p:separator/>
-                        </c:forEach>
-                        <h3>Response Status :</h3>
-                        <p:selectOneMenu value="#{questionsView.selectedResponseStatus}"
-                                         style="width: 152px; color: black;font-size: 13px; font-weight: bold"
-                                         required="true">
-                            <f:selectItem itemLabel="Select One" itemValue="0"/>
-                            <f:selectItems value="#{questionsView.responseStatusList}" var="res"
-                                           itemLabel="#{res.responseStatus}" itemValue="#{res.id}"/>
-                        </p:selectOneMenu>
+                            <c:forEach items="${questionsView.questionsList}"
+                                       var="question" varStatus="i">
+                                <h:outputText style="font-weight: bold; font-size: 16px"
+                                              value="(Q-#{question.id}) - #{question.question}"/>
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2">
+                                        <p:selectManyCheckbox value="#{questionsView.selectedAnswers}" id="grid"
+                                                              layout="pageDirection" columns="4" required="true">
+                                            <f:selectItems value="#{question.answersList}" var="answer"
+                                                           itemLabel="#{answer.answer}" itemValue="#{answer.id}"/>
+                                            <p:ajax listener="#{questionsView.selectingAnswersEvent(question.id, questionsView.selectedAnswers)}"/>
+                                        </p:selectManyCheckbox>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+                                <p:separator/>
+                            </c:forEach>
+                        </p:panel>
+
                         <h3>Comments :</h3>
                         <p:inputTextarea id="commentId" rows="6" cols="80" value="#{questionsView.comment}"/>
                         <p:outputPanel>

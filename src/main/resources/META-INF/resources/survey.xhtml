@@ -162,12 +162,14 @@
                             <p:commandButton value="Save" id="saveBtnId"
                                              style="margin-right:20px; background-color: green"
                                              ajax="false"
-                                             icon="ui-icon-disk" action="#{questionsView.saveQuestionsAnswers}"
+                                             icon="ui-icon-disk"
+                                             action="#{questionsView.saveQuestionsAnswers}"
                                              update="form2"
                                              process="@this">
                                 <p:resetInput target="form2"/>
                             </p:commandButton>
                             <p:commandButton class="ui-icon-refresh" value="Reset" update="form2 " process="@this"
+                                             action="survey?faces-redirect=true"
                                              style="margin-right:20px;background-color: red" icon="pi pi-save">
                                 <p:resetInput target="form2"/>
                             </p:commandButton>

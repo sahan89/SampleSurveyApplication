@@ -143,9 +143,9 @@ CREATE TABLE `reserch_num`  (
 -- Records of reserch_num
 -- ----------------------------
 INSERT INTO `reserch_num` VALUES (1, '0716808027', 'Any', 0, 1, 0);
-INSERT INTO `reserch_num` VALUES (2, '0112343453', 'Colombo', 1, 1, 0);
-INSERT INTO `reserch_num` VALUES (3, '0113456434', 'Colombo', 1, 1, 0);
-INSERT INTO `reserch_num` VALUES (4, '0115446754', 'Colombo', 1, 1, 0);
+INSERT INTO `reserch_num` VALUES (2, '0112343453', 'Colombo', 0, 1, 0);
+INSERT INTO `reserch_num` VALUES (3, '0113456434', 'Colombo', 0, 1, 0);
+INSERT INTO `reserch_num` VALUES (4, '0115446754', 'Colombo', 0, 1, 0);
 INSERT INTO `reserch_num` VALUES (5, '0123463453', 'Colombo', 0, 1, 0);
 INSERT INTO `reserch_num` VALUES (6, '0456324532', 'Rathnapura', 0, 1, 0);
 

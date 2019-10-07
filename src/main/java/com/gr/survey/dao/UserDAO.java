@@ -1,3 +1,4 @@
+/*
 package com.gr.survey.dao;
 
 import java.sql.Connection;
@@ -31,4 +32,4 @@ public class UserDAO {
             con.close();
         }
     }
-}
+}*/

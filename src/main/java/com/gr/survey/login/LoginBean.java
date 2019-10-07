@@ -1,7 +1,8 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
- */
+ *//*
+
 package com.gr.survey.login;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class LoginBean implements Serializable {
     private String password;
     private String message;
     private int status;
+    private int privilege;
     private static final long serialVersionUID = 1L;
 
     public int getId() {
@@ -67,6 +69,14 @@ public class LoginBean implements Serializable {
         this.message = message;
     }
 
+    public int getPrivilege() {
+        return privilege;
+    }
+
+    public void setPrivilege(int privilege) {
+        this.privilege = privilege;
+    }
+
     public String userLogin() throws SQLException, IOException {
         boolean result = UserDAO.login(username, password);
         if (result) {
@@ -89,4 +99,4 @@ public class LoginBean implements Serializable {
     public String home() {
         return "insert";
     }
-}
+}*/

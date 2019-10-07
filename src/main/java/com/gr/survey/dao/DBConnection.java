@@ -1,3 +1,4 @@
+/*
 package com.gr.survey.dao;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ public class DBConnection {
         Connection conMy = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            conMy = DriverManager.getConnection("jdbc:mysql://localhost:3306/survey2020?useUnicode=true&characterEncoding=UTF-8", "root", "");
+            conMy = DriverManager.getConnection("jdbc:mysql://localhost:3306/survey2020?useUnicode=true&characterEncoding=UTF-8", "root", "root");
 
         } catch (ClassNotFoundException ex) {
             FacesContext.getCurrentInstance().getExternalContext().redirect("/login.xhtml");
@@ -35,3 +36,4 @@ public class DBConnection {
         }
     }
 }
+*/

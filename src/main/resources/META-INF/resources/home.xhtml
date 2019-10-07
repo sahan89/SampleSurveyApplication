@@ -25,8 +25,8 @@
                         </div>
                         <div style="float: right; margin-right: 55px; font-size: 12px">
                             <h:form>
-                                <p>Welcome,  #{login.username}</p>
-                                <p:commandButton action="#{login.logout}" value="Logout" icon="ui-icon-power" ajax="false"
+                                <p>Welcome,  #{questionsView.logUsername}</p>
+                                <p:commandButton action="#{userLoginView.logout}" value="Logout" icon="ui-icon-power" ajax="false"
                                                  style="margin-left: 30px"></p:commandButton>
                             </h:form>
                         </div>
@@ -41,7 +41,7 @@
                     <h:form id="form" style="font-size: 12px" acceptcharset="UTF-8">
                         <p:menu style="width:180px;">
                             <p:submenu label="Survey 2020" style="font-size: 12px">
-                                <p:menuitem value="New Survey"  outcome="survey.xhtml" icon="ui-icon-calculator"/>
+                                <p:menuitem value="New Survey"  outcome="survey.xhtml" icon="ui-icon-circle-check"/>
                             </p:submenu>
                         </p:menu>
                     </h:form>

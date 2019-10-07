@@ -26,17 +26,17 @@
 
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="username" value="Username:"/>
-                    <h:inputText value="#{login.username}"
+                    <h:inputText value="#{userLoginView.username}"
                                  id="username" required="true" label="username" requiredMessage="Username is required"/>
 
                     <h:outputLabel for="password" value="Password:"/>
-                    <h:inputSecret value="#{login.password}"
+                    <h:inputSecret value="#{userLoginView.password}"
                                    id="password" required="true" label="password"
                                    requiredMessage="Password is required"/>
 
                     <f:facet name="footer" align="center">
                         <p:commandButton id="loginButton" value="Login" update="growl" style="float: right"
-                                         action="#{login.userLogin}"
+                                         action="#{userLoginView.userLogin}"
                                          oncomplete="handleLoginRequest(xhr, status, args)" ajax="true"/>
                     </f:facet>
                 </h:panelGrid>

@@ -31,7 +31,7 @@
     <welcome-file>login.jsf</welcome-file>
 <!--    <welcome-file>welcomePrimefaces.jsf</welcome-file>-->
   </welcome-file-list>
- 
+
   <!-- JSF Mapping -->
   <servlet>
     <servlet-name>facesServlet</servlet-name>

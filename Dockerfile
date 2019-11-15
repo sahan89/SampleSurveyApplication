@@ -1,7 +1,6 @@
 FROM java:8-jdk-alpine
 MAINTAINER sahanekanayake08@gmail.com
 
-RUN apt-get update
 RUN apt-get update && \
     apt-get install -y ant && \
     apt-get install -y wget && \

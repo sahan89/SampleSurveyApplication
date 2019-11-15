@@ -1,10 +1,10 @@
 FROM java:8-jdk-alpine
 MAINTAINER sahanekanayake08@gmail.com
-# RUN apt install git -y
+RUN apt install git -y
 RUN git --version
-# RUN apt install maven -y
+RUN apt install maven -y
 RUN mvn --version
-RUN /target/survey2020-1.0.war /opt/tomcat/webapps/
+RUN cp /target/survey2020-1.0.war /opt/tomcat/webapps/
 EXPOSE 8085
 # ADD /target/survey2020-1.0.war survey2020-1.0.war
 # ENTRYPOINT ["java","-jar","survey2020-1.0.war"]

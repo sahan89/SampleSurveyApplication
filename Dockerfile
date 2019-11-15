@@ -1,6 +1,12 @@
 FROM java:8-jdk-alpine
 MAINTAINER sahanekanayake08@gmail.com
-RUN apt-get install
+
+RUN apt-get update
+RUN apt-get update && \
+    apt-get install -y ant && \
+    apt-get install -y wget && \
+    apt-get clean;
+
 RUN apt-get install git -y
 RUN git --version
 RUN apt install maven -y

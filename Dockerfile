@@ -41,7 +41,7 @@ WORKDIR /opt/sahan/SampleSurveyApplication/
 RUN pwd
 RUN ls -al
 RUN mvn clean install
-RUN cp /opt/sahan/SampleSurveyApplication/target/survey2020-1.0.war /opt/tomcat/webapps/ survey2020
+RUN cp /opt/sahan/SampleSurveyApplication/target/survey2020-1.0.war /opt/tomcat/webapps/
 
 WORKDIR /opt/tomcat/webapps/
 RUN ls -al

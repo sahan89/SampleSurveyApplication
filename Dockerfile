@@ -1,8 +1,8 @@
 FROM java:8-jdk-alpine
 MAINTAINER sahanekanayake08@gmail.com
-RUN apt install git -y
+# RUN apt install git -y
 RUN git --version
-RUN apt install maven -y
+# RUN apt install maven -y
 RUN mvn --version
 RUN /target/survey2020-1.0.war /opt/tomcat/webapps/
 EXPOSE 8085
